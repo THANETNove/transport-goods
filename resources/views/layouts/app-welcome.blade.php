@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Regna Bootstrap Template</title>
+    <title>transport-goods</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -46,7 +46,7 @@
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                    <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="#">Drop Down 1</a></li>
                             <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
@@ -63,10 +63,24 @@
                             <li><a href="#">Drop Down 3</a></li>
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
+                    </li> -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownLang" data-toggle="dropdown">
+                            {{ Config::get('app.locale') }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownLang">
+                            <li><a href="{{ URL::to('change/en') }}">ENGLISH</a></li>
+                            <li><a href="{{ URL::to('change/th') }}">THAILAND</a></li>
+                            <li><a href="{{ URL::to('change/ch') }}">CHINESE</a></li>
+                        </ul>
                     </li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    <li><a class="nav-link scrollto" href="{{url('login')}}">login</a></li>
-                    <li><a class="nav-link scrollto" href="{{url('register')}}">register</a></li>
+
+
+                    <li><a class="nav-link scrollto" href="{{url('login')}}">{{ trans('message.login') }}</a></li>
+                    <li><a class="nav-link scrollto" href="{{url('register')}}">{{ trans('message.register') }}</a>
+                    </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -75,6 +89,26 @@
     <main>
         @yield('content')
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    function changeLocale(locale) {
+        $.ajax({
+            url: '/change/' + locale,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+                if (data.status == 'success') {
+                    location.reload(); // รีโหลดหน้าเพื่อให้มีการเปลี่ยนแปลงของภาษา
+                }
+            },
+            error: function() {
+                console.log("Error changing locale.");
+            }
+        });
+    }
+    </script>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 

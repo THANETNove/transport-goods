@@ -20,3 +20,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+/* Route::get('/translations', function () {
+    App::setLocale($request->lang);
+    session()->put('locale', $request->lang);
+
+    return redirect()->back();
+}); */
+Route::get('change/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return Redirect::back();
+    });
+/*     Route::post('change/{locale}', function ($locale) {
+        Session::put('locale', $locale);
+        return response()->json(['status' => 'success']);
+    }); */
